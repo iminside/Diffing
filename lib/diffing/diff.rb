@@ -7,7 +7,7 @@ module Diffing
 
     def initialize( from, to, delimiter = '' )
       @delimiter = delimiter
-      @parts = calcucate( from.to_s, to.to_s ).flatten
+      @parts = calcucate( split( from.to_s ), split( to.to_s ) ).flatten
     end
 
     def format( format = Format::Ascii )
@@ -38,9 +38,9 @@ module Diffing
     def calcucate( from, to )
       if found = find_middle( from, to )
         from_l, to_l, source, from_r, to_r = found
-        [ calcucate( from_l, to_l ), Part.new( source: source ), calcucate( from_r, to_r ) ]
+        [ calcucate( from_l, to_l ), Part.new( source: join( source ) ), calcucate( from_r, to_r ) ]
       else
-        [ Part.new( insert: to, delete: from ) ]
+        [ Part.new( insert: join( to ), delete: join( from ) ) ]
       end
     end
 
@@ -51,9 +51,9 @@ module Diffing
       max  = from.size unless max
       size = min + ( ( max - min ) / 2.to_f ).round
 
-      substrings_each( from, size ) do |substring, first, last|
+      subsets_each( from, size ) do |subset, first, last|
 
-        if found = to.index( substring )
+        if found = find_middle_index( to, subset )
 
           return (
             size != min and find_middle( from, to, size, max ) or
@@ -61,25 +61,40 @@ module Diffing
               from_l = from[ 0...first ]
               to_l   = to[ 0...found ]
               from_r = from[ last...from.size ]
-              to_r   = to[ found + substring.size...to.size ]
-              [ from_l, to_l, substring, from_r, to_r ]
+              to_r   = to[ found + subset.size...to.size ]
+              [ from_l, to_l, subset, from_r, to_r ]
             )
           )
 
         end
+
       end
 
       size != max and find_middle( from, to, min, size ) or nil
+
     end
 
-    def substrings_each( from, size )
+    def find_middle_index( set, search_subset )
+      return set.index( search_subset ) if @delimiter == ''
+      subsets_each( set, search_subset.size ){ |subset, first, last| return first if subset == search_subset }
+      nil
+    end
+
+    def subsets_each( from, size )
       ( from.size - size + 1 ).times do |first|
         last     = first + size
-        substring = from[ first...last ]
-        yield substring, first, last
+        subset = from[ first...last ]
+        yield subset, first, last
       end
     end
 
+    def split( set )
+      @delimiter == '' ? set : set.split( @delimiter )
+    end
+
+    def join( set )
+      @delimiter == '' ? set : set.join( @delimiter )
+    end
 
   end
 

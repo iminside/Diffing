@@ -7,6 +7,7 @@ module Diffing
 
   class << self
 
+
     def by_lines( from, to )
       Diff.new from, to, "\n"
     end
@@ -18,6 +19,7 @@ module Diffing
     def by_chars( from, to )
       Diff.new from, to
     end
+
 
   end
 

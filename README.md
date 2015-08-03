@@ -1,1 +1,1 @@
-Diffing
+Diffing two strings
