@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
 
   s.name                  = 'diffing'
-  s.version               = '0.0.3'
+  s.version               = '0.0.4'
   s.authors               = [ '4urbanoff' ]
   s.email                 = [ '4urbanoff@gmail.com' ]
   s.description           = 'Diffing two strings'
