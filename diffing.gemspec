@@ -2,7 +2,7 @@ Gem::Specification.new do |s|
 
   s.name                  = 'diffing'
   s.version               = '0.1.0'
-  s.author                = '4urbanoff'
+  s.author                = 'Denis Churbanov'
   s.email                 = '4urbanoff@gmail.com'
   s.description           = 'Diffing two strings'
   s.summary               = ''
