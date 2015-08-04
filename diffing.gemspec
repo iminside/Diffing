@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.version               = '0.1.0'
   s.author                = 'Denis Churbanov'
   s.email                 = '4urbanoff@gmail.com'
-  s.description           = 'Diffing two strings'
-  s.summary               = ''
+  s.description           = 'Diffing of two strings'
+  s.summary               = 'Gem for calculating two strings difference'
   s.homepage              = 'https://github.com/4urbanoff/Diffing'
   s.license               = 'MIT'
   s.files                 = Dir[ 'lib/**/*' ] + [ 'LICENSE.txt', 'Rakefile', 'Gemfile', 'README.md' ]
