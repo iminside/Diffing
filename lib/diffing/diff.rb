@@ -10,7 +10,7 @@ module Diffing
       @parts = calcucate( split( from.to_s ), split( to.to_s ) ).flatten
     end
 
-    def format( format = Format::Ascii )
+    def format( format )
       result = []
       @parts.each do |part|
         result << format.source( part.source ) if part.source?
@@ -24,13 +24,16 @@ module Diffing
       result.join @delimiter
     end
 
-    def to_s
-      format
+    def as_ascii
+      format Format::Ascii
     end
 
-    def inspect
-      format
+    def as_html
+      format Format::Html
     end
+
+    alias :to_s    :as_ascii
+    alias :inspect :as_ascii
 
 
     private
