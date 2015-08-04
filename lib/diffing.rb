@@ -1,6 +1,7 @@
 require 'diffing/diff'
 require 'diffing/part'
 require 'diffing/formats/ascii'
+require 'diffing/formats/html'
 
 
 module Diffing
