@@ -59,11 +59,11 @@ module CustomFormat
       "(++#{ value })"
     end
 
-    def delete( value )
+    def remove( value )
       "(--#{ value })"
     end
 
-    def replace( from, to )
+    def change( from, to )
       "(#{ from } => #{ to })"
     end
 
@@ -89,11 +89,11 @@ Diffing.by_words( from, to ).parts.map { |part|
   result = ''
   result << "<source:#{ part.source }>" if part.source?
   result << "<insert:#{ part.insert }>" if part.insert?
-  result << "<delete:#{ part.delete }>" if part.delete?
+  result << "<remove:#{ part.remove }>" if part.remove?
   result
   
 }.join 
-# => <insert:Hi!><delete:Hello!><source: I am><insert: two><source: string for diffing><delete: test>
+# => <insert:Hi!><remove:Hello!><source: I am><insert: two><source: string for diffing><remove: test>
 ```
 
 

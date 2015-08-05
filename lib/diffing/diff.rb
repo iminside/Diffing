@@ -13,10 +13,10 @@ module Diffing
     def format( format )
       result = []
       @parts.each do |part|
-        result << format.source(  part.source )              if part.source?
-        result << format.insert(  part.insert )              if part.insert? && !part.delete?
-        result << format.delete(  part.delete )              if part.delete? && !part.insert?
-        result << format.replace( part.delete, part.insert ) if part.insert? && part.delete?
+        result << format.source( part.source )              if part.source?
+        result << format.insert( part.insert )              if part.insert? && !part.remove?
+        result << format.remove( part.remove )              if part.remove? && !part.insert?
+        result << format.change( part.remove, part.insert ) if part.insert? && part.remove?
       end
       result.join
     end
@@ -40,7 +40,7 @@ module Diffing
         from_l, to_l, source, from_r, to_r = found
         [ calcucate( from_l, to_l ), Part.new( source: join( source ) ), calcucate( from_r, to_r ) ]
       else
-        [ Part.new( insert: join( to ), delete: join( from ) ) ]
+        [ Part.new( insert: join( to ), remove: join( from ) ) ]
       end
     end
 

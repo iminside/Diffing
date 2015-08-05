@@ -3,10 +3,10 @@ module Diffing
 
   class Part
 
-    attr_reader :source, :insert, :delete
+    attr_reader :source, :insert, :remove
 
-    def initialize( source: '', insert: '', delete: '' )
-      @source, @insert, @delete = source, insert, delete
+    def initialize( source: '', insert: '', remove: '' )
+      @source, @insert, @remove = source, insert, remove
     end
 
     def source?
@@ -17,8 +17,8 @@ module Diffing
       not @insert.empty?
     end
 
-    def delete?
-      not @delete.empty?
+    def remove?
+      not @remove.empty?
     end
 
   end

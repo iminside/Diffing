@@ -15,12 +15,12 @@ module Diffing
           "<ins>#{ value }</ins>"
         end
 
-        def delete( value )
+        def remove( value )
           "<del>#{ value }</del>"
         end
 
-        def replace( from, to )
-          delete( from ) + insert( to )
+        def change( from, to )
+          remove( from ) + insert( to )
         end
 
 

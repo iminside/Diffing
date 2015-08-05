@@ -15,11 +15,11 @@ module Diffing
           "{+`#{ value }`}"
         end
 
-        def delete( value )
+        def remove( value )
           "{-`#{ value }`}"
         end
 
-        def replace( from, to )
+        def change( from, to )
           "{`#{ from }`>>`#{ to }`}"
         end
 
