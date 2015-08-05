@@ -21,10 +21,6 @@ module Diffing
       not @delete.empty?
     end
 
-    def replace?
-      not @insert.empty? and not @delete.empty?
-    end
-
   end
 
 

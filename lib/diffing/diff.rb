@@ -5,23 +5,20 @@ module Diffing
 
     attr_reader :parts
 
-    def initialize( from, to, delimiter = '' )
-      @delimiter = delimiter
-      @parts = calcucate( split( from.to_s ), split( to.to_s ) ).flatten
+    def initialize( from, to, pattern = nil )
+      @pattern = pattern
+      @parts   = calcucate( split( from.to_s ), split( to.to_s ) ).flatten
     end
 
     def format( format )
       result = []
       @parts.each do |part|
-        result << format.source( part.source ) if part.source?
-        if part.replace? and format.respond_to?( :replace )
-          result << format.replace( part.delete, part.insert )
-        else
-          result << format.insert( part.insert ) if part.insert?
-          result << format.delete( part.delete ) if part.delete?
-        end
+        result << format.source(  part.source )              if part.source?
+        result << format.insert(  part.insert )              if part.insert? && !part.delete?
+        result << format.delete(  part.delete )              if part.delete? && !part.insert?
+        result << format.replace( part.delete, part.insert ) if part.insert? && part.delete?
       end
-      result.join @delimiter
+      result.join
     end
 
     def as_ascii
@@ -78,7 +75,7 @@ module Diffing
     end
 
     def find_middle_index( set, search_subset )
-      return set.index( search_subset ) if @delimiter == ''
+      return set.index( search_subset ) unless @pattern
       subsets_each( set, search_subset.size ){ |subset, first, last| return first if subset == search_subset }
       nil
     end
@@ -92,11 +89,11 @@ module Diffing
     end
 
     def split( set )
-      @delimiter == '' ? set : set.split( @delimiter )
+      @pattern ? set.scan( @pattern ) : set
     end
 
     def join( set )
-      @delimiter == '' ? set : set.join( @delimiter )
+      @pattern ? set.join : set
     end
 
   end

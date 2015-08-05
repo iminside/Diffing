@@ -9,16 +9,16 @@ module Diffing
   class << self
 
 
-    def by_lines( from, to )
-      Diff.new from, to, "\n"
+    def by_chars( from, to )
+      Diff.new from, to
     end
 
     def by_words( from, to )
-      Diff.new from, to, " "
+      Diff.new from, to, /\S+|\s+/
     end
 
-    def by_chars( from, to )
-      Diff.new from, to
+    def by_lines( from, to )
+      Diff.new from, to, /[^\n]+|\n+/
     end
 
 
