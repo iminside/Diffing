@@ -12,15 +12,15 @@ module Diffing
         end
 
         def insert( value )
-          "{+\"#{ value }\"}"
+          "{+`#{ value }`}"
         end
 
         def delete( value )
-          "{-\"#{ value }\"}"
+          "{-`#{ value }`}"
         end
 
         def replace( from, to )
-          "{\"#{ from }\" >> \"#{ to }\"}"
+          "{`#{ from }`>>`#{ to }`}"
         end
 
 
