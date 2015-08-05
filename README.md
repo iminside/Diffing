@@ -1,5 +1,9 @@
 # Diffing
 
+[![Build Status](https://travis-ci.org/4urbanoff/Diffing.svg)](https://travis-ci.org/4urbanoff/Diffing)
+[![Code Climate](https://codeclimate.com/github/4urbanoff/Diffing/badges/gpa.svg)](https://codeclimate.com/github/4urbanoff/Diffing)
+[![Test Coverage](https://codeclimate.com/github/4urbanoff/Diffing/badges/coverage.svg)](https://codeclimate.com/github/4urbanoff/Diffing/coverage)
+
 ## Installation
 
 ```
