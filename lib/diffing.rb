@@ -1,7 +1,7 @@
-require 'diffing/diff'
-require 'diffing/part'
-require 'diffing/formats/ascii'
-require 'diffing/formats/html'
+require_relative 'diffing/diff'
+require_relative 'diffing/part'
+require_relative 'diffing/formats/ascii'
+require_relative 'diffing/formats/html'
 
 
 module Diffing

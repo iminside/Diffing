@@ -75,7 +75,7 @@ module Diffing
     end
 
     def find_middle_index( set, search_subset )
-      return set.index( search_subset ) unless @pattern
+      return set.index( search_subset ) if set.is_a?( String ) && search_subset.is_a?( String )
       subsets_each( set, search_subset.size ){ |subset, first, last| return first if subset == search_subset }
       nil
     end
@@ -93,7 +93,7 @@ module Diffing
     end
 
     def join( set )
-      @pattern ? set.join : set
+      set.is_a?( Array ) ? set.join : set
     end
 
   end
