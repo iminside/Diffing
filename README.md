@@ -20,7 +20,7 @@ to   = "Hi! I am two string for diffing"
 diff = Diffing.by_chars( from, to )
 
 diff.as_ascii
-# => H{"ello" >> "i"}! I am{+" two"} string for diffing{-" test"}
+# => H{`ello`>>`i`}! I am{+` two`} string for diffing{-` test`}
 diff.as_html
 # => H<del>ello</del><ins>i</ins>! I am<ins> two</ins> string for diffing<del> test</del>
 ```
@@ -30,9 +30,9 @@ diff.as_html
 diff = Diffing.by_words( from, to )
 
 diff.as_ascii
-# => {"Hello!" >> "Hi!"} I am {+"two"} string for diffing {-"test"}
+# => {`Hello!`>>`Hi!`} I am{+` two`} string for diffing{-` test`}
 diff.as_html
-# => <del>Hello!</del><ins>Hi!</ins> I am <ins>two</ins> string for diffing <del>test</del>
+# => <del>Hello!</del><ins>Hi!</ins> I am<ins> two</ins> string for diffing<del> test</del>
 ```
 
 #### By lines
@@ -40,7 +40,7 @@ diff.as_html
 diff = Diffing.by_lines( from, to )
 
 diff.as_ascii
-# => {"Hello! I am string for diffing test" >> "Hi! I am two string for diffing"}
+# => {`Hello! I am string for diffing test`>>`Hi! I am two string for diffing`}
 diff.as_html
 # => <del>Hello! I am string for diffing test</del><ins>Hi! I am two string for diffing</ins>
 ```
@@ -71,21 +71,15 @@ module CustomFormat
 end
 
 
-Diffing.by_chars.format( CustomFormat )
+Diffing.by_chars( from, to ).format( CustomFormat )
 # => H(ello => i)! I am(++ two) string for diffing(-- test)
-Diffing.by_words.format( CustomFormat )
-# => (Hello! => Hi!) I am (++two) string for diffing (--test)
-Diffing.by_lines.format( CustomFormat )
+Diffing.by_words( from, to ).format( CustomFormat )
+# => (Hello! => Hi!) I am(++ two) string for diffing(-- test)
+Diffing.by_lines( from, to ).format( CustomFormat )
 # => (Hello! I am string for diffing test => Hi! I am two string for diffing)
 
 ```
 
-## Custom delimiter
-
-```ruby
-Diffing::Diff.new( from, to, 'i' ).as_ascii
-# => {"Hello! I am str" >> "Hi! I am two str"}ing for diffi{"ng test" >> "ng"}
-```
 
 ## Custom use separated parts
 
@@ -98,9 +92,18 @@ Diffing.by_words( from, to ).parts.map { |part|
   result << "<delete:#{ part.delete }>" if part.delete?
   result
   
-}.join( '' )
-# => <insert:Hi!><delete:Hello!><source:I am><insert:two><source:string for diffing><delete:test>
+}.join 
+# => <insert:Hi!><delete:Hello!><source: I am><insert: two><source: string for diffing><delete: test>
 ```
+
+
+## Custom pattern of parts
+
+```ruby
+Diffing::Diff.new( from, to, /.{,3}\s?/ ).as_ascii
+# => {`Hello! `>>`Hi! `}I a{`m string `>>`m two string `}for diffin{`g test`>>`g`}
+```
+
 
 ## Copyright
 
