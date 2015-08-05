@@ -7,7 +7,7 @@ module Diffing
 
     def initialize( from, to, pattern = nil )
       @pattern = pattern
-      @parts   = calcucate( split( from.to_s ), split( to.to_s ) ).flatten
+      @parts   = calculate( split( from.to_s ), split( to.to_s ) ).flatten
     end
 
     def format( format )
@@ -22,11 +22,11 @@ module Diffing
     end
 
     def as_ascii
-      format Format::Ascii
+      format Formats::Ascii
     end
 
     def as_html
-      format Format::Html
+      format Formats::Html
     end
 
     alias :to_s    :as_ascii
@@ -35,10 +35,10 @@ module Diffing
 
     private
 
-    def calcucate( from, to )
+    def calculate( from, to )
       if found = find_middle( from, to )
         from_l, to_l, source, from_r, to_r = found
-        [ calcucate( from_l, to_l ), Part.new( source: join( source ) ), calcucate( from_r, to_r ) ]
+        [ calculate( from_l, to_l ), Part.new( source: join( source ) ), calculate( from_r, to_r ) ]
       else
         [ Part.new( insert: join( to ), remove: join( from ) ) ]
       end

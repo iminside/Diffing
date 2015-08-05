@@ -1,6 +1,6 @@
 module Diffing
 
-  module Format
+  module Formats
 
     module Html
 
