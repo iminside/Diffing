@@ -6,11 +6,11 @@ describe Diffing::Diff do
 
   it '#calculate' do
     ex = diff_by_chars.send( :calculate, 'ab', 'bc' ).flatten.map { |part|
-      ( part.source? and part.source ) or ( part.insert? and part.insert ) or ( part.remove? and part.remove )
+      ( part.source? && part.source ) || ( part.insert? && part.insert ) || ( part.remove? && part.remove )
     }.join
     expect( ex ).to eql( 'abc' )
     ex = diff_by_words.send( :calculate, %w(a b), %w(b c) ).flatten.map { |part|
-      ( part.source? and part.source ) or ( part.insert? and part.insert ) or ( part.remove? and part.remove )
+      ( part.source? && part.source ) || ( part.insert? && part.insert ) || ( part.remove? && part.remove )
     }.join
     expect( ex ).to eql( 'abc' )
   end

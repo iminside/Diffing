@@ -10,13 +10,13 @@ module Diffing
       @parts   = calculate( split( from.to_s ), split( to.to_s ) ).flatten
     end
 
-    def format( format )
+    def format( formatter )
       result = []
       @parts.each do |part|
-        result << format.source( part.source )              if part.source?
-        result << format.insert( part.insert )              if part.insert? && !part.remove?
-        result << format.remove( part.remove )              if part.remove? && !part.insert?
-        result << format.change( part.remove, part.insert ) if part.insert? && part.remove?
+        result << formatter.source( part.source )              if part.source?
+        result << formatter.insert( part.insert )              if part.insert? && !part.remove?
+        result << formatter.remove( part.remove )              if part.remove? && !part.insert?
+        result << formatter.change( part.remove, part.insert ) if part.insert? && part.remove?
       end
       result.join
     end
@@ -46,7 +46,7 @@ module Diffing
 
     def find_middle( from, to, min = 0, max = nil )
 
-      return nil if from.empty? or to.empty?
+      return nil if from.empty? || to.empty?
 
       max  = from.size unless max
       size = min + ( ( max - min ) / 2.to_f ).round
@@ -56,7 +56,7 @@ module Diffing
         if found = find_middle_index( to, subset )
 
           return (
-            size != min and find_middle( from, to, size, max ) or
+            size != min && find_middle( from, to, size, max ) ||
             (
               from_l = from[ 0...first ]
               to_l   = to[ 0...found ]
@@ -70,13 +70,38 @@ module Diffing
 
       end
 
-      size != max and find_middle( from, to, min, size ) or nil
+      size != max && find_middle( from, to, min, size ) || nil
+
+    end
+
+    def scan_index( set, search_subset )
+
+      offset = 0
+      while found = set.slice( offset..-1 ).index( search_subset ) do
+        yield found
+        offset += found + 1
+      end
 
     end
 
     def find_middle_index( set, search_subset )
       return set.index( search_subset ) if set.is_a?( String ) && search_subset.is_a?( String )
-      subsets_each( set, search_subset.size ){ |subset, first, last| return first if subset == search_subset }
+
+      set = set.dup
+
+      index = 0
+
+      scan_index( set.join, search_subset.join ) do |found|
+
+        size = 0
+        while size != found
+          break if size + set[0].size > found
+          size  += set.shift.size
+          index += 1
+        end
+
+        return index if set.slice(0, search_subset.size ) == search_subset
+      end
       nil
     end
 
