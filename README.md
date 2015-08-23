@@ -7,7 +7,7 @@
 ## Installation
 
 ```
-sudo gem install differ
+sudo gem install diffing
 ```
 
 ## Usage
