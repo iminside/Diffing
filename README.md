@@ -1,8 +1,6 @@
 # Diffing
 
 [![Build Status](https://travis-ci.org/denis-churbanov/Diffing.svg?branch=master)](https://travis-ci.org/denis-churbanov/Diffing)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/denis-churbanov/Diffing/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/denis-churbanov/Diffing/?branch=master)
-[![Code Climate](https://codeclimate.com/github/denis-churbanov/Diffing/badges/gpa.svg)](https://codeclimate.com/github/denis-churbanov/Diffing)
 
 ## Installation
 
